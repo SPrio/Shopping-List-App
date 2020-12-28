@@ -1,18 +1,11 @@
 defmodule ShoppingList do
-  @moduledoc """
-  Documentation for `ShoppingList`.
-  """
+  use GenServer
 
-  @doc """
-  Hello world.
+  def start_link() do
+    GenServer.start_link(__MODULE__, [])
+  end
 
-  ## Examples
-
-      iex> ShoppingList.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def init(list) do
+    {:ok, list}
   end
 end
