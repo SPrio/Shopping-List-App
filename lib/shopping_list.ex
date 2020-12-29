@@ -10,7 +10,6 @@ defmodule ShoppingList do
     GenServer.cast(pid, item)
   end
 
-  @spec view(atom | pid | {atom, any} | {:via, atom, any}) :: any
   def view(pid) do
     GenServer.call(pid, :view)
   end
@@ -19,7 +18,17 @@ defmodule ShoppingList do
     GenServer.cast(pid, {:remove, item})
   end
 
+  def stop(pid) do
+    GenServer.stop(pid, :normal, :infinity)
+  end
+
   #Server
+  def terminate(_reason, list) do
+    IO.puts("we are all done shopping")
+    IO.inspect(list)
+    :ok
+  end
+
   def handle_cast({:remove, item}, list) do
     updated_list = Enum.reject(list, fn(i) -> i == item end)
     {:noreply, updated_list}
